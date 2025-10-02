@@ -1,2 +1,2 @@
 # To_Do_App
-Created with CodeSandbox
+A simple to do app with React

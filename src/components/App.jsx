@@ -1,5 +1,6 @@
 import React from "react";
 import ToDo from "./item";
+import InputArea from "./form";
 
 //fisrt get the value when added, you do that by using the onChange event of the input
 //the state has to be an array of tto do lists
@@ -33,7 +34,7 @@ function App() {
   console.log(toDo);
 
   function iterate(toDo, index) {
-    return <ToDo text={toDo} onChecked={deleteItem} key={index} id={index} />;
+    return <ToDo text={toDo} onChecked={deleteItem} key={toDo} id={index} />;
   }
 
   function deleteItem(id) {
@@ -48,15 +49,11 @@ function App() {
       <div className="heading">
         <h1>To-Do List</h1>
       </div>
-
-      <div className="form">
-        <form onSubmit={handleSubmit}>
-          <input onChange={handleChange} type="text" value={activity} />
-          <button>
-            <span>Add</span>
-          </button>
-        </form>
-      </div>
+      <InputArea
+        handleChangeSend={handleChange}
+        handleSubmitSend={handleSubmit}
+        Activity={activity}
+      />
 
       <div>
         <ul>{toDo.map(iterate)}</ul>

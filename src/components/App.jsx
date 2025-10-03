@@ -1,4 +1,5 @@
 import React from "react";
+import ToDo from "./item";
 
 //fisrt get the value when added, you do that by using the onChange event of the input
 //the state has to be an array of tto do lists
@@ -13,17 +14,34 @@ function App() {
   }
   console.log(activity);
 
+  function isAlnum(str) {
+    return /^[a-z0-9 ]+$/i.test(str);
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
 
     setToDo((prevValue) => {
-      return [activity, ...prevValue];
+      if (isAlnum(activity)) {
+        return [...prevValue, activity];
+      } else {
+        return [...prevValue];
+      }
     });
+    setActivity("");
   }
   console.log(toDo);
 
-  function iterate(toDo) {
-    return <li>{toDo}</li>;
+  function iterate(toDo, index) {
+    return <ToDo text={toDo} onChecked={deleteItem} key={index} id={index} />;
+  }
+
+  function deleteItem(id) {
+    setToDo((prevValue) => {
+      return prevValue.filter((item, index) => {
+        return index !== id;
+      });
+    });
   }
   return (
     <div className="container">
@@ -33,7 +51,7 @@ function App() {
 
       <div className="form">
         <form onSubmit={handleSubmit}>
-          <input onChange={handleChange} type="text" />
+          <input onChange={handleChange} type="text" value={activity} />
           <button>
             <span>Add</span>
           </button>
